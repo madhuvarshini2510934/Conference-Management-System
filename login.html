@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conference Management System - Login</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="left-panel">
+        <h1>Conference Management System</h1>
+        <p>Manage paper submissions, reviewer assignments, conference registrations, and certificates through one secure portal.</p>
+
+        <div class="features">
+            <div>📄 Paper Submission</div>
+            <div>👨‍🏫 Reviewer Assignment</div>
+            <div>📊 Review Tracking</div>
+            <div>🏆 Certificate Generation</div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+
+        <div class="login-card">
+
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to continue</p>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+
+                <label>Login as</label>
+                <select id="role">
+                    <option value="Admin">Admin</option>
+                    <option value="Organizer">Organizer</option>
+                    <option value="Author">Author</option>
+                    <option value="Reviewer">Reviewer</option>
+                    <option value="Participant">Participant</option>
+                </select>
+
+                <button type="submit">Login</button>
+
+            </form>
+            <p style="text-align:center;margin-top:20px;">
+    Don't have an account?
+    <a href="register.html">Register here</a>
+</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

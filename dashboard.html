@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+        <h2>CMS</h2>
+
+        <a href="#">Dashboard</a>
+        <a href="#">Papers</a>
+        <a href="#">Reviews</a>
+        <a href="#">Notifications</a>
+        <a href="#">Reports</a>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="main">
+
+        <h1>Dashboard</h1>
+        <p>Welcome, <span id="userRole"></span></p>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Submitted Papers</h3>
+                <p>120</p>
+            </div>
+
+            <div class="card">
+                <h3>Accepted Papers</h3>
+                <p>65</p>
+            </div>
+
+            <div class="card">
+                <h3>Reviewers</h3>
+                <p>35</p>
+            </div>
+
+            <div class="card">
+                <h3>Participants</h3>
+                <p>240</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

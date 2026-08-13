@@ -26,7 +26,22 @@ if (loginForm) {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userRole", role);
 
-        window.location.href = "dashboard.html";
+        // Redirect based on role
+        if (role === "Admin") {
+            window.location.href = "admin-dashboard.html";
+        }
+        else if (role === "Organizer") {
+            window.location.href = "organizer-dashboard.html";
+        }
+        else if (role === "Author") {
+            window.location.href = "author-dashboard.html";
+        }
+        else if (role === "Reviewer") {
+            window.location.href = "reviewer-dashboard.html";
+        }
+        else if (role === "Participant") {
+            window.location.href = "participant-dashboard.html";
+        }
     });
 }
 
@@ -55,13 +70,21 @@ if (registerForm) {
 
         alert("Registration successful!");
 
+        // Go to login page
         window.location.href = "login.html";
     });
 }
 
 // AUTHENTICATION
 
-if (window.location.pathname.includes("dashboard.html")) {
+if (
+    window.location.pathname.includes("admin-dashboard.html") ||
+    window.location.pathname.includes("organizer-dashboard.html") ||
+    window.location.pathname.includes("author-dashboard.html") ||
+    window.location.pathname.includes("reviewer-dashboard.html") ||
+    window.location.pathname.includes("participant-dashboard.html")
+) {
+
     const loggedIn = localStorage.getItem("isLoggedIn");
 
     if (loggedIn !== "true") {

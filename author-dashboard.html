@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Author Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+
+        <h2>CMS</h2>
+
+        <a href="author-dashboard.html">Dashboard</a>
+        <a href="submit-paper.html">Submit Paper</a>
+        <a href="my-papers.html">My Papers</a>
+        <a href="#">Notifications</a>
+        <a href="#">Profile</a>
+
+        <button onclick="logout()">Logout</button>
+
+    </div>
+
+    <div class="main">
+
+        <h1>Author Dashboard</h1>
+        <p>Welcome, Author</p>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Submitted Papers</h3>
+                <p>5</p>
+            </div>
+
+            <div class="card">
+                <h3>Under Review</h3>
+                <p>2</p>
+            </div>
+
+            <div class="card">
+                <h3>Accepted Papers</h3>
+                <p>2</p>
+            </div>
+
+            <div class="card">
+                <h3>Rejected Papers</h3>
+                <p>1</p>
+            </div>
+
+        </div>
+
+        <div class="action-box">
+
+            <h2>Paper Submission</h2>
+            <p>You can submit your research paper for the conference.</p>
+
+            <a href="submit-paper.html" class="btn">Submit New Paper</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

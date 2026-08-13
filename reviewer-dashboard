@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviewer Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+<div class="sidebar">
+<h2>CMS</h2>
+
+<a href="reviewer-dashboard.html">Dashboard</a>
+<a href="#">Assigned Papers</a>
+<a href="#">Submit Review</a>
+<a href="#">Review History</a>
+
+<button onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+
+<h1>Reviewer Dashboard</h1>
+<p>Welcome, Reviewer</p>
+
+<div class="cards">
+
+<div class="card">
+<h3>Assigned Papers</h3>
+<p>8</p>
+</div>
+
+<div class="card">
+<h3>Reviews Submitted</h3>
+<p>5</p>
+</div>
+
+<div class="card">
+<h3>Pending Reviews</h3>
+<p>3</p>
+</div>
+
+<div class="card">
+<h3>Completed</h3>
+<p>5</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

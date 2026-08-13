@@ -5,8 +5,10 @@ box-sizing:border-box;
 font-family:'Poppins',sans-serif;
 }
 
+/* BODY */
+
 body{
-background:linear-gradient(135deg,#4f46e5,#7c3aed);
+background:#F3F4F6;
 }
 
 /* LOGIN PAGE */
@@ -18,8 +20,8 @@ height:100vh;
 
 .left-panel{
 flex:1;
-background:linear-gradient(160deg,#4338ca,#6d28d9);
-color:white;
+background:#E5E7EB;
+color:#1E293B;
 padding:60px;
 display:flex;
 flex-direction:column;
@@ -29,17 +31,19 @@ justify-content:center;
 .left-panel h1{
 font-size:42px;
 margin-bottom:20px;
+color:#111827;
 }
 
 .left-panel p{
 line-height:1.8;
 margin-bottom:30px;
-opacity:0.9;
+color:#4B5563;
 }
 
 .features div{
 margin:15px 0;
 font-size:18px;
+color:#374151;
 }
 
 .right-panel{
@@ -47,7 +51,7 @@ flex:1;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#f8fafc;
+background:#F3F4F6;
 }
 
 .login-card{
@@ -55,16 +59,16 @@ width:400px;
 background:white;
 padding:40px;
 border-radius:18px;
-box-shadow:0 15px 30px rgba(0,0,0,0.1);
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
 }
 
 .login-card h2{
 font-size:30px;
-color:#1e293b;
+color:#111827;
 }
 
 .subtitle{
-color:#64748b;
+color:#6B7280;
 margin-bottom:25px;
 }
 
@@ -72,23 +76,27 @@ label{
 display:block;
 margin-bottom:8px;
 font-weight:500;
-color:#334155;
+color:#374151;
 }
 
 input,
-select{
+select,
+textarea{
 width:100%;
 padding:14px;
 margin-bottom:18px;
-border:1px solid #cbd5e1;
+border:1px solid #D1D5DB;
 border-radius:10px;
 font-size:15px;
+background:#FFFFFF;
 }
 
 input:focus,
-select:focus{
+select:focus,
+textarea:focus{
 outline:none;
-border-color:#6366f1;
+border-color:#64748B;
+box-shadow:0 0 0 3px rgba(100,116,139,0.15);
 }
 
 button{
@@ -96,7 +104,7 @@ width:100%;
 padding:15px;
 border:none;
 border-radius:10px;
-background:#4f46e5;
+background:#334155;
 color:white;
 font-size:16px;
 font-weight:600;
@@ -105,7 +113,7 @@ transition:0.3s;
 }
 
 button:hover{
-background:#4338ca;
+background:#1E293B;
 }
 
 /* DASHBOARD */
@@ -117,40 +125,54 @@ height:100vh;
 
 .sidebar{
 width:250px;
-background:#1e1b4b;
-color:white;
+background:#FFFFFF;
+color:#1E293B;
 padding:30px;
 display:flex;
 flex-direction:column;
+box-shadow:2px 0 10px rgba(0,0,0,0.08);
 }
 
 .sidebar h2{
 margin-bottom:30px;
+color:#111827;
 }
 
 .sidebar a{
-color:white;
+color:#475569;
 text-decoration:none;
 margin:12px 0;
+padding:10px 12px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#E5E7EB;
+color:#111827;
 }
 
 .sidebar button{
 margin-top:auto;
-background:#dc2626;
+background:#DC2626;
+}
+
+.sidebar button:hover{
+background:#B91C1C;
 }
 
 .main{
 flex:1;
-background:#f8fafc;
+background:#F3F4F6;
 padding:40px;
 }
 
 .main h1{
-color:#1e293b;
+color:#111827;
 }
 
 .main p{
-color:#64748b;
+color:#6B7280;
 margin-top:10px;
 }
 
@@ -164,16 +186,120 @@ margin-top:30px;
 .card{
 background:white;
 padding:25px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+border-radius:16px;
+box-shadow:0 6px 20px rgba(0,0,0,0.06);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-3px);
 }
 
 .card h3{
-color:#475569;
+color:#374151;
 }
 
 .card p{
 font-size:32px;
-color:#4f46e5;
+color:#111827;
 margin-top:15px;
+}
+
+.action-box{
+background:white;
+padding:30px;
+border-radius:16px;
+margin-top:30px;
+box-shadow:0 6px 20px rgba(0,0,0,0.06);
+}
+
+.action-box h2{
+color:#111827;
+margin-bottom:10px;
+}
+
+.action-box p{
+color:#6B7280;
+margin-bottom:20px;
+}
+
+.btn{
+display:inline-block;
+padding:12px 25px;
+background:#334155;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:600;
+}
+
+.btn:hover{
+background:#1E293B;
+}
+
+.action-box form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.action-box label{
+font-weight:500;
+color:#374151;
+}
+
+.action-box input,
+.action-box textarea{
+padding:12px;
+border:1px solid #D1D5DB;
+border-radius:10px;
+font-family:'Poppins',sans-serif;
+background:#FFFFFF;
+}
+
+.action-box button{
+padding:12px;
+background:#334155;
+color:white;
+border:none;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+.action-box button:hover{
+background:#1E293B;
+}
+
+.paper-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.paper-table th,
+.paper-table td{
+padding:15px;
+border-bottom:1px solid #E5E7EB;
+text-align:left;
+}
+
+.paper-table th{
+background:#F9FAFB;
+color:#111827;
+}
+
+.status{
+font-weight:600;
+}
+
+.submitted{
+color:#2563EB;
+}
+
+.review{
+color:#EA580C;
+}
+
+.accepted{
+color:#16A34A;
 }

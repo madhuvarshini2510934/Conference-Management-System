@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Paper</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+        <h2>CMS</h2>
+
+        <a href="author-dashboard.html">Dashboard</a>
+        <a href="submit-paper.html">Submit Paper</a>
+        <a href="my-papers.html">My Papers</a>
+        <a href="#">Notifications</a>
+        <a href="#">Profile</a>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="main">
+
+        <h1>Paper Submission</h1>
+        <p>Submit your research paper for the conference.</p>
+
+        <div class="action-box">
+
+            <form id="paperForm">
+
+                <label>Paper Title</label>
+                <input type="text" id="title" placeholder="Enter paper title" required>
+
+                <label>Abstract</label>
+                <textarea id="abstract" rows="6" placeholder="Enter paper abstract" required></textarea>
+
+                <label>Keywords</label>
+                <input type="text" id="keywords" placeholder="AI, Machine Learning, Cloud Computing">
+
+                <label>Upload Paper (PDF)</label>
+                <input type="file" id="paperFile" accept=".pdf">
+
+                <button type="submit">Submit Paper</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+document.getElementById("paperForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    alert("Paper submitted successfully!");
+
+    window.location.href = "my-papers.html";
+});
+</script>
+
+<script src="app.js"></script>
+
+</body>
+</html>

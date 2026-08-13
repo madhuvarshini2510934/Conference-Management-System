@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Papers</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+        <h2>CMS</h2>
+
+        <a href="author-dashboard.html">Dashboard</a>
+        <a href="submit-paper.html">Submit Paper</a>
+        <a href="my-papers.html">My Papers</a>
+        <a href="#">Notifications</a>
+        <a href="#">Profile</a>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="main">
+
+        <h1>My Papers</h1>
+        <p>View all your submitted papers and their current status.</p>
+
+        <div class="action-box">
+
+            <table class="paper-table">
+
+                <tr>
+                    <th>Paper ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>P001</td>
+                    <td>AI Based Smart Healthcare System</td>
+                    <td class="status submitted">Submitted</td>
+                </tr>
+
+                <tr>
+                    <td>P002</td>
+                    <td>Cloud Security using Blockchain</td>
+                    <td class="status review">Under Review</td>
+                </tr>
+
+                <tr>
+                    <td>P003</td>
+                    <td>IoT Smart Traffic Management</td>
+                    <td class="status accepted">Accepted</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

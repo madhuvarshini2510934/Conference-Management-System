@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate - CMS</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           CERTIFICATE PAGE
+        ========================= */
+
+        .certificate {
+            position: relative;
+            background: #fffdf7;
+            border: 3px solid #162a46;
+            padding: 45px 60px;
+            margin: 30px auto;
+            max-width: 900px;
+            min-height: 500px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+        }
+
+        /* Inner border */
+
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #b89b5e;
+            pointer-events: none;
+        }
+
+
+        /* Decorative top line */
+
+        .certificate-top {
+            width: 120px;
+            height: 4px;
+            background: #b89b5e;
+            margin: 0 auto 25px auto;
+        }
+
+
+        /* Certificate title */
+
+        .certificate h2 {
+            color: #162a46;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 34px;
+            letter-spacing: 3px;
+            margin: 10px 0 12px;
+        }
+
+
+        /* Subtitle */
+
+        .certificate-subtitle {
+            color: #b89b5e;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+
+        /* Presented text */
+
+        .certificate p {
+            color: #4a4a4a;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+
+        /* Participant name */
+
+        .certificate h1 {
+            color: #162a46;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 38px;
+            font-weight: bold;
+            margin: 18px 0 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b89b5e;
+            display: inline-block;
+            min-width: 350px;
+        }
+
+
+        /* Conference name */
+
+        .certificate h3 {
+            color: #162a46;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 23px;
+            margin: 18px 0;
+        }
+
+
+        /* Date */
+
+        #certificateDate {
+            color: #555;
+            margin-top: 18px;
+            font-size: 15px;
+        }
+
+
+        /* Signature */
+
+        .signature {
+            margin-top: 38px;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 35px;
+        }
+
+        .signature-box {
+            text-align: center;
+            min-width: 190px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #162a46;
+            padding-top: 8px;
+            color: #162a46;
+            font-size: 14px;
+        }
+
+
+        /* Certificate ID */
+
+        .certificate-id {
+            position: absolute;
+            bottom: 18px;
+            left: 35px;
+            color: #777;
+            font-size: 11px;
+        }
+
+
+        /* Decorative corner elements */
+
+        .corner {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-color: #b89b5e;
+            border-style: solid;
+        }
+
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-width: 2px 2px 0 0;
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-width: 0 0 2px 2px;
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-width: 0 2px 2px 0;
+        }
+
+
+        /* =========================
+           PRINT
+        ========================= */
+
+        @media print {
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .main {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .print-hide {
+                display: none !important;
+            }
+
+            .certificate {
+                width: 90%;
+                max-width: none;
+                height: 85vh;
+                min-height: 0;
+                margin: 7vh auto 0 auto;
+                padding: 45px 60px;
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>CMS</h2>
+
+        <a href="participant-dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="participant-dashboard.html#registration">
+            Conference Registration
+        </a>
+
+        <a href="#">
+            Conference Schedule
+        </a>
+
+        <a href="certificate.html">
+            Certificate Download
+        </a>
+
+        <a href="#">
+            Profile
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <h1 class="print-hide">
+            Certificate Download
+        </h1>
+
+        <p class="print-hide">
+            Your conference participation certificate
+        </p>
+
+
+        <!-- =========================
+             CERTIFICATE
+        ========================= -->
+
+        <div class="certificate">
+
+
+            <!-- Decorative corners -->
+
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+
+
+            <!-- Top decoration -->
+
+            <div class="certificate-top"></div>
+
+
+            <div class="certificate-subtitle">
+                Conference Management System
+            </div>
+
+
+            <h2>
+                CERTIFICATE OF PARTICIPATION
+            </h2>
+
+
+            <p>
+                This certificate is proudly presented to
+            </p>
+
+
+            <!-- NAME FROM REGISTRATION -->
+
+            <h1 id="certificateName">
+                Loading...
+            </h1>
+
+
+            <p>
+                for successfully participating in
+            </p>
+
+
+            <!-- CONFERENCE NAME FROM REGISTRATION -->
+
+            <h3 id="conferenceName">
+                Loading...
+            </h3>
+
+
+            <p>
+                as a registered participant.
+            </p>
+
+
+            <!-- DATE -->
+
+            <p id="certificateDate">
+            </p>
+
+
+            <!-- SIGNATURE -->
+
+            <div class="signature">
+
+                <div class="signature-box">
+
+                    <div class="signature-line">
+                        Conference Organizer
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CERTIFICATE ID -->
+
+            <div class="certificate-id">
+                Certificate ID: CMS-2026-001
+            </div>
+
+
+        </div>
+
+
+        <!-- DOWNLOAD BUTTON -->
+
+        <button
+            class="print-hide"
+            onclick="downloadCertificate()">
+
+            Download Certificate
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   GET REGISTRATION
+========================= */
+
+let registration =
+    JSON.parse(
+        localStorage.getItem("conferenceRegistration")
+    );
+
+
+/* =========================
+   DISPLAY CERTIFICATE
+========================= */
+
+if (registration) {
+
+    document.getElementById("certificateName").textContent =
+        registration.name;
+
+    document.getElementById("conferenceName").textContent =
+        registration.conference;
+
+    document.getElementById("certificateDate").textContent =
+        "Date: " + new Date().toLocaleDateString();
+
+}
+else {
+
+    document.getElementById("certificateName").textContent =
+        "No Registration Found";
+
+    document.getElementById("conferenceName").textContent =
+        "Please register for a conference first.";
+
+}
+
+
+/* =========================
+   DOWNLOAD CERTIFICATE
+========================= */
+
+function downloadCertificate() {
+
+    window.print();
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    localStorage.removeItem("isLoggedIn");
+
+    localStorage.removeItem("userRole");
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

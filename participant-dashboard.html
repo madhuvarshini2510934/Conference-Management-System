@@ -1,60 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Participant Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="dashboard">
 
-<div class="sidebar">
-<h2>CMS</h2>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
-<a href="participant-dashboard.html">Dashboard</a>
-<a href="#">Conference Registration</a>
-<a href="#">Conference Schedule</a>
-<a href="#">Certificate Download</a>
-<a href="#">Profile</a>
+        <h2>CMS</h2>
 
-<button onclick="logout()">Logout</button>
+        <a href="participant-dashboard.html">Dashboard</a>
+        <a href="#registration">Conference Registration</a>
+        <a href="#">Conference Schedule</a>
+        <a href="certificate.html">Certificate Download</a>
+        <a href="#">Profile</a>
+        <button onclick="logout()">Logout</button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <h1>Participant Dashboard</h1>
+
+        <p>Welcome, Participant</p>
+
+
+        <!-- DASHBOARD CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Registration Status</h3>
+                <p id="registrationStatus">Not Registered</p>
+            </div>
+
+            <div class="card">
+                <h3>Events Registered</h3>
+                <p id="eventsCount">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Certificates</h3>
+                <p>1</p>
+            </div>
+
+            <div class="card">
+                <h3>Notifications</h3>
+                <p id="notificationCount">0</p>
+            </div>
+
+        </div>
+
+
+        <!-- CONFERENCE REGISTRATION -->
+        <div class="action-box" id="registration">
+
+            <h2>Conference Registration</h2>
+
+            <p>
+                Register for the upcoming conference.
+            </p>
+
+            <form id="registrationForm">
+
+                <label>Participant Name</label>
+
+                <input
+                    type="text"
+                    id="participantName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="participantEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Conference</label>
+
+                <select id="conference" required>
+
+                    <option value="">Select Conference</option>
+
+                    <option value="International Technology Conference">
+                        International Technology Conference
+                    </option>
+
+                    <option value="AI and Data Science Conference">
+                        AI and Data Science Conference
+                    </option>
+
+                    <option value="Web Technology Conference">
+                        Web Technology Conference
+                    </option>
+
+                </select>
+
+                <label>Registration Type</label>
+
+                <select id="registrationType" required>
+
+                    <option value="">Select Registration Type</option>
+
+                    <option value="Student">
+                        Student
+                    </option>
+
+                    <option value="Faculty">
+                        Faculty
+                    </option>
+
+                    <option value="Professional">
+                        Professional
+                    </option>
+
+                </select>
+
+                <br><br>
+
+                <button type="submit">
+                    Register for Conference
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- REGISTRATION DETAILS -->
+        <div class="action-box" id="registrationDetails">
+
+            <h2>Registration Details</h2>
+
+            <p id="detailsMessage">
+                No registration found.
+            </p>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="main">
 
-<h1>Participant Dashboard</h1>
-<p>Welcome, Participant</p>
+<script>
 
-<div class="cards">
+let registration =
+    JSON.parse(localStorage.getItem("conferenceRegistration")) || null;
 
-<div class="card">
-<h3>Registration Status</h3>
-<p>Confirmed</p>
-</div>
 
-<div class="card">
-<h3>Events Registered</h3>
-<p>4</p>
-</div>
+/* SHOW EXISTING REGISTRATION */
 
-<div class="card">
-<h3>Certificates</h3>
-<p>1</p>
-</div>
+function displayRegistration() {
 
-<div class="card">
-<h3>Notifications</h3>
-<p>2</p>
-</div>
+    if (registration) {
 
-</div>
+        document.getElementById("registrationStatus").innerHTML =
+            "Confirmed";
 
-</div>
+        document.getElementById("eventsCount").innerHTML = "1";
 
-</div>
+        document.getElementById("notificationCount").innerHTML = "1";
+
+        document.getElementById("detailsMessage").innerHTML =
+            "Name: " + registration.name +
+            "<br>Email: " + registration.email +
+            "<br>Conference: " + registration.conference +
+            "<br>Registration Type: " + registration.type +
+            "<br>Status: Confirmed";
+
+    }
+
+}
+
+
+/* REGISTRATION */
+
+document.getElementById("registrationForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let name =
+        document.getElementById("participantName").value;
+
+    let email =
+        document.getElementById("participantEmail").value;
+
+    let conference =
+        document.getElementById("conference").value;
+
+    let type =
+        document.getElementById("registrationType").value;
+
+
+    registration = {
+
+        name: name,
+        email: email,
+        conference: conference,
+        type: type,
+        status: "Confirmed"
+
+    };
+
+
+    localStorage.setItem(
+        "conferenceRegistration",
+        JSON.stringify(registration)
+    );
+
+
+    alert("Conference registration successful!");
+
+
+    displayRegistration();
+
+});
+
+
+displayRegistration();
+
+</script>
+
 
 <script src="app.js"></script>
+
 </body>
+
 </html>

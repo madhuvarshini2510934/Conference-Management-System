@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Author Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
 <div class="dashboard">
 
+    <!-- SIDEBAR -->
     <div class="sidebar">
 
         <h2>CMS</h2>
@@ -25,41 +32,65 @@
 
     </div>
 
+
+    <!-- MAIN CONTENT -->
     <div class="main">
 
         <h1>Author Dashboard</h1>
+
         <p>Welcome, Author</p>
 
+
+        <!-- DASHBOARD CARDS -->
         <div class="cards">
 
             <div class="card">
                 <h3>Submitted Papers</h3>
-                <p>5</p>
+                <p id="submittedCount">0</p>
             </div>
 
             <div class="card">
                 <h3>Under Review</h3>
-                <p>2</p>
+                <p id="reviewCount">0</p>
             </div>
 
             <div class="card">
                 <h3>Accepted Papers</h3>
-                <p>2</p>
+                <p id="acceptedCount">0</p>
             </div>
 
             <div class="card">
                 <h3>Rejected Papers</h3>
-                <p>1</p>
+                <p id="rejectedCount">0</p>
             </div>
 
         </div>
 
+
+        <!-- PAPER SUBMISSION -->
         <div class="action-box">
 
             <h2>Paper Submission</h2>
-            <p>You can submit your research paper for the conference.</p>
 
-            <a href="submit-paper.html" class="btn">Submit New Paper</a>
+            <p>
+                You can submit your research paper for the conference.
+            </p>
+
+            <a href="submit-paper.html" class="btn">
+                Submit New Paper
+            </a>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+        <div class="action-box">
+
+            <h2>Notifications</h2>
+
+            <div id="notifications">
+                <p>No notifications yet.</p>
+            </div>
 
         </div>
 
@@ -67,7 +98,99 @@
 
 </div>
 
+
+<!-- AUTHOR DASHBOARD JAVASCRIPT -->
+<script>
+
+let papers = JSON.parse(localStorage.getItem("papers")) || [];
+
+let submitted = papers.length;
+
+let underReview = papers.filter(function(paper) {
+    return paper.status === "Under Review";
+}).length;
+
+let accepted = papers.filter(function(paper) {
+    return paper.status === "Accepted";
+}).length;
+
+let rejected = papers.filter(function(paper) {
+    return paper.status === "Rejected";
+}).length;
+
+
+document.getElementById("submittedCount").innerHTML = submitted;
+
+document.getElementById("reviewCount").innerHTML = underReview;
+
+document.getElementById("acceptedCount").innerHTML = accepted;
+
+document.getElementById("rejectedCount").innerHTML = rejected;
+
+
+/* NOTIFICATIONS */
+
+let notificationBox = document.getElementById("notifications");
+
+if (papers.length > 0) {
+
+    notificationBox.innerHTML = "";
+
+    papers.forEach(function(paper) {
+
+        let message = "";
+
+        if (paper.status === "Submitted") {
+
+            message = "Your paper \"" + paper.title +
+                      "\" has been submitted successfully.";
+
+        }
+
+        else if (paper.status === "Under Review") {
+
+            message = "Your paper \"" + paper.title +
+                      "\" is currently under review.";
+
+        }
+
+        else if (paper.status === "Reviewed") {
+
+            message = "Your paper \"" + paper.title +
+                      "\" has been reviewed by the assigned reviewer.";
+
+        }
+
+        else if (paper.status === "Accepted") {
+
+            message = "Congratulations! Your paper \"" +
+                      paper.title + "\" has been accepted.";
+
+        }
+
+        else if (paper.status === "Rejected") {
+
+            message = "Your paper \"" +
+                      paper.title + "\" has been rejected.";
+
+        }
+
+
+        let notification = document.createElement("p");
+
+        notification.innerHTML = "🔔 " + message;
+
+        notificationBox.appendChild(notification);
+
+    });
+
+}
+
+</script>
+
+
 <script src="app.js"></script>
 
 </body>
+
 </html>

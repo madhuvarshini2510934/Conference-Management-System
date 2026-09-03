@@ -1,59 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Reviewer Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="dashboard">
 
-<div class="sidebar">
-<h2>CMS</h2>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
-<a href="reviewer-dashboard.html">Dashboard</a>
-<a href="#">Assigned Papers</a>
-<a href="#">Submit Review</a>
-<a href="#">Review History</a>
+        <h2>CMS</h2>
 
-<button onclick="logout()">Logout</button>
+        <a href="reviewer-dashboard.html">Dashboard</a>
+        <a href="#">Assigned Papers</a>
+        <a href="#">Submit Review</a>
+        <a href="#">Review History</a>
+
+        <button onclick="logout()">Logout</button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <h1>Reviewer Dashboard</h1>
+
+        <p>Welcome, Reviewer</p>
+
+
+        <!-- DASHBOARD CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Assigned Papers</h3>
+                <p>8</p>
+            </div>
+
+            <div class="card">
+                <h3>Reviews Submitted</h3>
+                <p>5</p>
+            </div>
+
+            <div class="card">
+                <h3>Pending Reviews</h3>
+                <p>3</p>
+            </div>
+
+            <div class="card">
+                <h3>Completed</h3>
+                <p>5</p>
+            </div>
+
+        </div>
+
+
+        <!-- ASSIGNED PAPERS -->
+        <div class="action-box">
+
+            <h2>Assigned Papers</h2>
+
+            <table class="paper-table" id="reviewerPapersTable">
+
+                <tr>
+                    <th>Paper ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="main">
 
-<h1>Reviewer Dashboard</h1>
-<p>Welcome, Reviewer</p>
+<!-- REVIEWER JAVASCRIPT -->
+<script>
 
-<div class="cards">
+let papers = JSON.parse(localStorage.getItem("papers")) || [];
 
-<div class="card">
-<h3>Assigned Papers</h3>
-<p>8</p>
-</div>
+let table = document.getElementById("reviewerPapersTable");
 
-<div class="card">
-<h3>Reviews Submitted</h3>
-<p>5</p>
-</div>
 
-<div class="card">
-<h3>Pending Reviews</h3>
-<p>3</p>
-</div>
+papers.forEach(function(paper, index) {
 
-<div class="card">
-<h3>Completed</h3>
-<p>5</p>
-</div>
+    if (paper.reviewer !== "Not Assigned") {
 
-</div>
+        let row = table.insertRow();
 
-</div>
+        row.insertCell(0).innerHTML = "P00" + (index + 1);
 
-</div>
+        row.insertCell(1).innerHTML = paper.title;
+
+        row.insertCell(2).innerHTML = paper.status;
+
+        let actionCell = row.insertCell(3);
+
+        actionCell.innerHTML =
+            '<button onclick="submitReview(' + index + ')">Submit Review</button>';
+
+    }
+
+});
+
+
+function submitReview(index) {
+
+    let review = prompt("Enter your review:");
+
+    if (review) {
+
+        papers[index].review = review;
+
+        papers[index].status = "Reviewed";
+
+        localStorage.setItem("papers", JSON.stringify(papers));
+
+        alert("Review submitted successfully!");
+
+        location.reload();
+
+    }
+
+}
+
+</script>
+
 
 <script src="app.js"></script>
+
 </body>
+
 </html>

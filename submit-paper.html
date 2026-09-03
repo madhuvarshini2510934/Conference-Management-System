@@ -58,6 +58,27 @@
 document.getElementById("paperForm").addEventListener("submit", function(e){
     e.preventDefault();
 
+    let title = document.getElementById("title").value;
+    let abstractText = document.getElementById("abstract").value;
+    let keywords = document.getElementById("keywords").value;
+    let file = document.getElementById("paperFile").files[0];
+
+    let papers = JSON.parse(localStorage.getItem("papers")) || [];
+
+    let newPaper = {
+        id: Date.now(),
+        title: title,
+        abstract: abstractText,
+        keywords: keywords,
+        fileName: file ? file.name : "No file uploaded",
+        status: "Submitted",
+        reviewer: "Not Assigned"
+    };
+
+    papers.push(newPaper);
+
+    localStorage.setItem("papers", JSON.stringify(papers));
+
     alert("Paper submitted successfully!");
 
     window.location.href = "my-papers.html";

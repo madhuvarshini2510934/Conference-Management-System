@@ -1,60 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Admin Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="dashboard">
 
-<div class="sidebar">
-<h2>CMS</h2>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
-<a href="admin-dashboard.html">Dashboard</a>
-<a href="#">Manage Users</a>
-<a href="#">Manage Conferences</a>
-<a href="#">View All Papers</a>
-<a href="#">Reports</a>
+        <h2>CMS</h2>
 
-<button onclick="logout()">Logout</button>
+        <a href="admindashboard.html">Dashboard</a>
+        <a href="#">Manage Users</a>
+        <a href="#">Manage Conferences</a>
+        <a href="#">View All Papers</a>
+        <a href="#">Reports</a>
+
+        <button onclick="logout()">Logout</button>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <h1>Admin Dashboard</h1>
+
+        <p>Welcome, Admin</p>
+
+
+        <!-- DASHBOARD CARDS -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Users</h3>
+                <p>120</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Papers</h3>
+                <p>85</p>
+            </div>
+
+            <div class="card">
+                <h3>Conferences</h3>
+                <p>3</p>
+            </div>
+
+            <div class="card">
+                <h3>Certificates</h3>
+                <p>60</p>
+            </div>
+
+        </div>
+
+
+        <!-- SUBMITTED PAPERS -->
+        <div class="action-box">
+
+            <h2>Submitted Papers</h2>
+
+            <table class="paper-table" id="adminPapersTable">
+
+                <tr>
+                    <th>Paper ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Reviewer</th>
+                    <th>Action</th>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="main">
 
-<h1>Admin Dashboard</h1>
-<p>Welcome, Admin</p>
+<!-- ADMIN JAVASCRIPT -->
+<script>
 
-<div class="cards">
+let papers = JSON.parse(localStorage.getItem("papers")) || [];
 
-<div class="card">
-<h3>Total Users</h3>
-<p>120</p>
-</div>
+let table = document.getElementById("adminPapersTable");
 
-<div class="card">
-<h3>Total Papers</h3>
-<p>85</p>
-</div>
 
-<div class="card">
-<h3>Conferences</h3>
-<p>3</p>
-</div>
+papers.forEach(function(paper, index) {
 
-<div class="card">
-<h3>Certificates</h3>
-<p>60</p>
-</div>
+    let row = table.insertRow();
 
-</div>
+    row.insertCell(0).innerHTML = "P00" + (index + 1);
 
-</div>
+    row.insertCell(1).innerHTML = paper.title;
 
-</div>
+    row.insertCell(2).innerHTML = paper.status;
+
+    row.insertCell(3).innerHTML = paper.reviewer;
+
+    let actionCell = row.insertCell(4);
+
+
+    if (paper.status === "Reviewed") {
+
+        actionCell.innerHTML =
+            '<button onclick="acceptPaper(' + index + ')">Accept</button> ' +
+            '<button onclick="rejectPaper(' + index + ')">Reject</button>';
+
+    }
+    else if (paper.reviewer === "Not Assigned") {
+
+        actionCell.innerHTML =
+            '<button onclick="assignReviewer(' + index + ')">Assign Reviewer</button>';
+
+    }
+    else if (paper.status === "Accepted") {
+
+    actionCell.innerHTML = "Accepted";
+
+}
+else if (paper.status === "Rejected") {
+
+    actionCell.innerHTML = "Rejected";
+
+}
+else {
+
+    actionCell.innerHTML = "Waiting for Review";
+
+}
+
+});
+
+
+/* ASSIGN REVIEWER */
+
+function assignReviewer(index) {
+
+    let reviewer = prompt("Enter reviewer name:");
+
+    if (reviewer) {
+
+        papers[index].reviewer = reviewer;
+
+        papers[index].status = "Under Review";
+
+        localStorage.setItem("papers", JSON.stringify(papers));
+
+        alert("Reviewer assigned successfully!");
+
+        location.reload();
+
+    }
+
+}
+
+
+/* ACCEPT PAPER */
+
+function acceptPaper(index) {
+
+    papers[index].status = "Accepted";
+
+    localStorage.setItem("papers", JSON.stringify(papers));
+
+    alert("Paper accepted successfully!");
+
+    location.reload();
+
+}
+
+
+/* REJECT PAPER */
+
+function rejectPaper(index) {
+
+    papers[index].status = "Rejected";
+
+    localStorage.setItem("papers", JSON.stringify(papers));
+
+    alert("Paper rejected!");
+
+    location.reload();
+
+}
+
+</script>
+
 
 <script src="app.js"></script>
+
 </body>
+
 </html>

@@ -303,3 +303,72 @@ color:#EA580C;
 .accepted{
 color:#16A34A;
 }
+
+```css
+.certificate {
+    background: white;
+    border: 8px double #4f46e5;
+    padding: 50px;
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.certificate h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.certificate h1 {
+    color: #4f46e5;
+    margin: 20px;
+}
+
+.signature {
+    margin-top: 50px;
+    text-align: right;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    background: #4f46e5;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+```
+@media print {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .main > h1,
+    .main > p,
+    .main > button {
+        display: none !important;
+    }
+
+    .certificate {
+        display: block !important;
+        width: 90%;
+        max-width: none;
+        margin: 20px auto;
+        padding: 50px;
+        box-shadow: none;
+        border: 8px double #4f46e5;
+    }
+
+    body {
+        margin: 0;
+        background: white;
+    }
+}

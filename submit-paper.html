@@ -55,34 +55,70 @@
 </div>
 
 <script>
-document.getElementById("paperForm").addEventListener("submit", function(e){
+
+document.getElementById("paperForm").addEventListener("submit", function(e) {
+
     e.preventDefault();
 
     let title = document.getElementById("title").value;
     let abstractText = document.getElementById("abstract").value;
     let keywords = document.getElementById("keywords").value;
-    let file = document.getElementById("paperFile").files[0];
 
-    let papers = JSON.parse(localStorage.getItem("papers")) || [];
+    if (title === "" || abstractText === "") {
+        alert("Please fill the required fields");
+        return;
+    }
 
-    let newPaper = {
-        id: Date.now(),
-        title: title,
-        abstract: abstractText,
-        keywords: keywords,
-        fileName: file ? file.name : "No file uploaded",
-        status: "Submitted",
-        reviewer: "Not Assigned"
-    };
+    // Get logged-in author's name
+    let authorName = localStorage.getItem("registeredName");
 
-    papers.push(newPaper);
+    if (!authorName) {
+        authorName = "Unknown Author";
+    }
 
-    localStorage.setItem("papers", JSON.stringify(papers));
+    fetch("http://localhost:8081/submit-paper", {
 
-    alert("Paper submitted successfully!");
+        method: "POST",
 
-    window.location.href = "my-papers.html";
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        body: new URLSearchParams({
+            title: title,
+            authorName: authorName
+        })
+
+    })
+
+    .then(response => response.text())
+
+    .then(result => {
+
+        if (result === "success") {
+
+            alert("Paper submitted successfully!");
+
+            window.location.href = "my-papers.html";
+
+        } else {
+
+            alert("Paper submission failed.");
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Cannot connect to the Java server.");
+
+    });
+
 });
+
 </script>
 
 <script src="app.js"></script>

@@ -2,35 +2,122 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reviewer Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <title>Reviewer Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .review-form {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .review-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .review-form label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .review-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .review-form button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .submit-review-btn {
+            background: #334155;
+            color: white;
+        }
+
+        .cancel-review-btn {
+            background: #e5e7eb;
+            color: #333;
+            margin-left: 10px;
+        }
+
+        .review-message {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+    </style>
 
 </head>
+
 
 <body>
 
 <div class="dashboard">
 
+
     <!-- SIDEBAR -->
+
     <div class="sidebar">
 
         <h2>CMS</h2>
 
-        <a href="reviewer-dashboard.html">Dashboard</a>
-        <a href="#">Assigned Papers</a>
-        <a href="#">Submit Review</a>
-        <a href="#">Review History</a>
+        <a href="reviewer-dashboard.html">
+            Dashboard
+        </a>
 
-        <button onclick="logout()">Logout</button>
+        <a href="#">
+            Assigned Papers
+        </a>
+
+        <a href="#">
+            Submit Review
+        </a>
+
+        <a href="#">
+            Review History
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
 
     </div>
 
 
+
     <!-- MAIN CONTENT -->
+
     <div class="main">
 
         <h1>Reviewer Dashboard</h1>
@@ -39,46 +126,143 @@
 
 
         <!-- DASHBOARD CARDS -->
+
         <div class="cards">
 
             <div class="card">
-                <h3>Assigned Papers</h3>
-                <p>8</p>
+
+                <h3>Submitted Papers</h3>
+
+                <p id="paperCount">
+                    0
+                </p>
+
             </div>
 
+
             <div class="card">
+
                 <h3>Reviews Submitted</h3>
-                <p>5</p>
-            </div>
 
-            <div class="card">
-                <h3>Pending Reviews</h3>
-                <p>3</p>
-            </div>
+                <p id="reviewCount">
+                    0
+                </p>
 
-            <div class="card">
-                <h3>Completed</h3>
-                <p>5</p>
             </div>
 
         </div>
 
 
-        <!-- ASSIGNED PAPERS -->
+
+        <!-- PAPERS -->
+
         <div class="action-box">
 
-            <h2>Assigned Papers</h2>
+            <h2>Submitted Papers</h2>
 
-            <table class="paper-table" id="reviewerPapersTable">
+
+            <table
+                class="paper-table"
+                id="reviewerPapersTable"
+            >
 
                 <tr>
+
                     <th>Paper ID</th>
+
                     <th>Title</th>
+
+                    <th>Author</th>
+
                     <th>Status</th>
+
+                    <th>Reviewer</th>
+
                     <th>Action</th>
+
                 </tr>
 
             </table>
+
+
+            <!-- REVIEW FORM -->
+
+            <div
+                class="review-form"
+                id="reviewForm"
+            >
+
+                <h2>
+                    Submit Review
+                </h2>
+
+
+                <p>
+                    Reviewing Paper ID:
+                    <strong id="selectedPaperId">
+                        -
+                    </strong>
+                </p>
+
+
+                <label for="comments">
+                    Review Comments
+                </label>
+
+                <textarea
+                    id="comments"
+                    placeholder="Enter your review comments..."
+                ></textarea>
+
+
+
+                <label for="recommendation">
+                    Recommendation
+                </label>
+
+                <select id="recommendation">
+
+                    <option value="">
+                        Select recommendation
+                    </option>
+
+                    <option value="Accept">
+                        Accept
+                    </option>
+
+                    <option value="Reject">
+                        Reject
+                    </option>
+
+                </select>
+
+
+
+                <br>
+
+
+                <button
+                    class="submit-review-btn"
+                    onclick="sendReview()"
+                >
+                    Submit Review
+                </button>
+
+
+                <button
+                    class="cancel-review-btn"
+                    onclick="cancelReview()"
+                >
+                    Cancel
+                </button>
+
+
+                <p
+                    class="review-message"
+                    id="reviewMessage"
+                ></p>
+
+            </div>
 
         </div>
 
@@ -87,60 +271,330 @@
 </div>
 
 
-<!-- REVIEWER JAVASCRIPT -->
+
 <script>
 
-let papers = JSON.parse(localStorage.getItem("papers")) || [];
 
-let table = document.getElementById("reviewerPapersTable");
+/* GLOBAL VARIABLE */
+
+let selectedPaperId = null;
 
 
-papers.forEach(function(paper, index) {
 
-    if (paper.reviewer !== "Not Assigned") {
+/* LOAD PAPERS */
 
-        let row = table.insertRow();
+let table =
+    document.getElementById(
+        "reviewerPapersTable"
+    );
 
-        row.insertCell(0).innerHTML = "P00" + (index + 1);
 
-        row.insertCell(1).innerHTML = paper.title;
+fetch(
+    "http://localhost:8083/reviewer-papers"
+)
 
-        row.insertCell(2).innerHTML = paper.status;
+.then(response =>
+    response.text()
+)
 
-        let actionCell = row.insertCell(3);
+.then(data => {
 
-        actionCell.innerHTML =
-            '<button onclick="submitReview(' + index + ')">Submit Review</button>';
+    if (data.trim() === "") {
+
+        return;
 
     }
+
+
+    let papers =
+        data.trim().split("\n");
+
+
+    document.getElementById(
+        "paperCount"
+    ).innerHTML =
+        papers.length;
+
+
+    let reviewedCount = 0;
+
+
+    papers.forEach(function(paper) {
+
+        let details =
+            paper.split("|");
+
+
+        let row =
+            table.insertRow();
+
+
+        row.insertCell(0).innerHTML =
+            details[0];
+
+
+        row.insertCell(1).innerHTML =
+            details[1];
+
+
+        row.insertCell(2).innerHTML =
+            details[2];
+
+
+        row.insertCell(3).innerHTML =
+            details[3];
+
+
+        row.insertCell(4).innerHTML =
+            details[4];
+
+
+        let actionCell =
+            row.insertCell(5);
+
+
+        if (
+            details[3] === "Reviewed"
+        ) {
+
+            actionCell.innerHTML =
+                "Completed";
+
+
+            reviewedCount++;
+
+        }
+
+        else {
+
+            actionCell.innerHTML =
+                '<button onclick="openReviewForm('
+                + details[0]
+                + ')">Review</button>';
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "reviewCount"
+    ).innerHTML =
+        reviewedCount;
+
+})
+
+
+.catch(error => {
+
+    console.error(error);
+
+    alert(
+        "Cannot connect to the Java server."
+    );
 
 });
 
 
-function submitReview(index) {
 
-    let review = prompt("Enter your review:");
+/* OPEN REVIEW FORM */
 
-    if (review) {
+function openReviewForm(paperId) {
 
-        papers[index].review = review;
+    selectedPaperId = paperId;
 
-        papers[index].status = "Reviewed";
 
-        localStorage.setItem("papers", JSON.stringify(papers));
+    document.getElementById(
+        "selectedPaperId"
+    ).innerHTML =
+        paperId;
 
-        alert("Review submitted successfully!");
 
-        location.reload();
+    document.getElementById(
+        "reviewForm"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "comments"
+    ).value = "";
+
+
+    document.getElementById(
+        "recommendation"
+    ).value = "";
+
+
+    document.getElementById(
+        "reviewMessage"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "reviewForm"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* CANCEL REVIEW */
+
+function cancelReview() {
+
+    selectedPaperId = null;
+
+
+    document.getElementById(
+        "reviewForm"
+    ).style.display =
+        "none";
+
+}
+
+
+
+/* SEND REVIEW */
+
+function sendReview() {
+
+
+    if (selectedPaperId === null) {
+
+        alert(
+            "Please select a paper."
+        );
+
+        return;
 
     }
+
+
+    let comments =
+        document.getElementById(
+            "comments"
+        ).value.trim();
+
+
+    let recommendation =
+        document.getElementById(
+            "recommendation"
+        ).value;
+
+
+    if (comments === "") {
+
+        alert(
+            "Please enter review comments."
+        );
+
+        return;
+
+    }
+
+
+    if (recommendation === "") {
+
+        alert(
+            "Please select Accept or Reject."
+        );
+
+        return;
+
+    }
+
+
+    let reviewerName =
+        localStorage.getItem(
+            "registeredName"
+        ) || "Reviewer";
+
+
+
+    fetch(
+        "http://localhost:8083/review-paper",
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded"
+
+            },
+
+            body: new URLSearchParams({
+
+                paperId:
+                    selectedPaperId,
+
+                reviewerName:
+                    reviewerName,
+
+                comments:
+                    comments,
+
+                recommendation:
+                    recommendation
+
+            })
+
+        }
+
+    )
+
+
+    .then(response =>
+        response.text()
+    )
+
+
+    .then(result => {
+
+        if (result === "success") {
+
+            alert(
+                "Review submitted successfully!"
+            );
+
+
+            location.reload();
+
+        }
+
+        else {
+
+            alert(
+                "Review submission failed."
+            );
+
+        }
+
+    })
+
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Cannot connect to the Java server."
+        );
+
+    });
 
 }
 
 </script>
 
 
+
 <script src="app.js"></script>
+
 
 </body>
 

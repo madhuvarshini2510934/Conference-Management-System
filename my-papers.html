@@ -49,21 +49,45 @@
 
 <script>
 
-let papers = JSON.parse(localStorage.getItem("papers")) || [];
+let authorName = localStorage.getItem("registeredName");
 
-let table = document.getElementById("papersTable");
+if (!authorName) {
+    authorName = "Unknown Author";
+}
 
-papers.forEach(function(paper, index) {
+fetch("http://localhost:8082/my-papers?authorName=" + encodeURIComponent(authorName))
+    .then(response => response.text())
+    .then(data => {
 
-    let row = table.insertRow();
+        let table = document.getElementById("papersTable");
 
-    row.insertCell(0).innerHTML = "P00" + (index + 1);
-    row.insertCell(1).innerHTML = paper.title;
-    row.insertCell(2).innerHTML =
-        '<span class="status submitted">' + paper.status + '</span>';
-    row.insertCell(3).innerHTML = paper.reviewer;
+        if (data.trim() === "") {
+            return;
+        }
 
-});
+        let papers = data.trim().split("\n");
+
+        papers.forEach(function(paper) {
+
+            let details = paper.split("|");
+
+            let row = table.insertRow();
+
+            row.insertCell(0).innerHTML = details[0];
+            row.insertCell(1).innerHTML = details[1];
+            row.insertCell(2).innerHTML =
+                '<span class="status submitted">' + details[2] + '</span>';
+            row.insertCell(3).innerHTML = details[3];
+
+        });
+
+    })
+    .catch(error => {
+
+        console.error(error);
+        alert("Cannot connect to the Java server.");
+
+    });
 
 </script>
 

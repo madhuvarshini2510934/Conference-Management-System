@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Notifications</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .notification-container {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .notification {
+            background: #f1f5f9;
+            border-left: 5px solid #334155;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .notification h3 {
+            margin-top: 0;
+            color: #1e293b;
+        }
+
+        .notification p {
+            color: #475569;
+        }
+
+        .no-notification {
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 8px;
+            color: #64748b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="main">
+
+        <h1>Notifications</h1>
+
+        <div
+            id="notifications"
+            class="notification-container">
+        </div>
+
+    </div>
+
+
+<script>
+
+let authorName =
+    localStorage.getItem("registeredName");
+
+
+if (!authorName) {
+
+    authorName = "Unknown Author";
+
+}
+
+
+fetch(
+    "http://localhost:8082/my-papers?authorName="
+    + encodeURIComponent(authorName)
+)
+
+
+.then(response => response.text())
+
+
+.then(data => {
+
+    const container =
+        document.getElementById("notifications");
+
+
+    if (data.trim() === "") {
+
+        container.innerHTML =
+            "<div class='no-notification'>" +
+            "No notifications yet." +
+            "</div>";
+
+        return;
+
+    }
+
+
+    const papers =
+        data.trim().split("\n");
+
+
+    papers.forEach(function(paper) {
+
+        const details =
+            paper.split("|");
+
+
+        const title =
+            details[1];
+
+        const status =
+            details[2];
+
+        const recommendation =
+            details[4];
+
+
+        let message = "";
+
+
+        // Paper submitted
+
+        if (status === "Submitted") {
+
+            message =
+                "Your paper <strong>" +
+                title +
+                "</strong> has been submitted successfully.";
+
+        }
+
+
+        // Paper accepted
+
+        else if (
+            status === "Reviewed" &&
+            recommendation === "Accept"
+        ) {
+
+            message =
+                "Your paper <strong>" +
+                title +
+                "</strong> has been accepted.";
+
+        }
+
+
+        // Paper rejected
+
+        else if (
+            status === "Reviewed" &&
+            recommendation === "Reject"
+        ) {
+
+            message =
+                "Your paper <strong>" +
+                title +
+                "</strong> has been rejected.";
+
+        }
+
+
+        // Reviewed but no recommendation
+
+        else if (status === "Reviewed") {
+
+            message =
+                "Your paper <strong>" +
+                title +
+                "</strong> has been reviewed.";
+
+        }
+
+
+        if (message !== "") {
+
+            container.innerHTML +=
+
+                "<div class='notification'>" +
+
+                "<h3>🔔 Notification</h3>" +
+
+                "<p>" +
+                message +
+                "</p>" +
+
+                "</div>";
+
+        }
+
+    });
+
+})
+
+
+.catch(error => {
+
+    console.error(error);
+
+    document.getElementById("notifications").innerHTML =
+
+        "<div class='no-notification'>" +
+        "Unable to connect to the Java server." +
+        "</div>";
+
+});
+
+</script>
+
+
+</body>
+
+</html>
